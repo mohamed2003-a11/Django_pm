@@ -15,3 +15,14 @@ class ProjectCreateForms(forms.ModelForm):
 
         }
 
+class ProjectUpdateForms(forms.ModelForm):
+    class Meta:
+        model = models.Project
+        fields = ['category','title','status']
+        widgets = {
+
+            'status': forms.Select(),
+            'category': forms.Select(),
+            'title': forms.Textarea()
+
+        }

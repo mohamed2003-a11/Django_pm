@@ -2,10 +2,10 @@ from django.db import models
 from django.conf.global_settings import AUTH_USER_MODEL
 # Create your models here.
 class Category(models.Model):
-     name = models.CharField(max_length=100)
+     name = models.CharField(max_length=255)
 
-def __str__(self):
-     return self.name
+     def __str__(self):
+          return self.name
 
 class Project_status(models.IntegerChoices):
      PENDING = 1,'Pending'
@@ -13,14 +13,18 @@ class Project_status(models.IntegerChoices):
      POSTPONED = 3,'Postponed'
      Canceled = 4,'Canceled'
 
+
 class Project(models.Model):
      title = models.CharField(max_length=255)
      description = models.TextField()
      created_at = models.DateTimeField(auto_now_add=True)
      updated_at = models.DateTimeField(auto_now=True)
      category = models.ForeignKey(Category, on_delete=models.PROTECT)
-     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
-     status = models.IntegerField(choices=Project_status.choices, default=Project_status.PENDING)
+     user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE,null=True)
+     status = models.IntegerField(
+          choices=Project_status.choices,
+          default=Project_status.PENDING,
+     )
 
      def __str__(self):
           return self.title
